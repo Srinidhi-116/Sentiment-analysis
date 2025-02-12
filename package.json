@@ -1,13 +1,14 @@
 {
-  "homepage": "https://github.com/Srinidhi-116/Sentiment-analysis",
+  "homepage": "https://Srinidhi-116.github.io/Sentiment-analysis",
   "name": "sentiment-analysis-app",
   "version": "1.0.0",
   "description": "A simple web application for sentiment analysis using Deepgram API",
   "main": "index.html",
   "scripts": {
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"    
-  },
+  "build": "echo 'No build step defined. Add your build command here!'",
+  "predeploy": "npm run build",
+  "deploy": "gh-pages -d build"
+},
   "dependencies": {},
   "devDependencies": {
     "live-server": "^1.2.1"
