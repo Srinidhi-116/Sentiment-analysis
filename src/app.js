@@ -71,35 +71,49 @@ document.addEventListener('DOMContentLoaded', () => {
                 segmentDiv.textContent = `Segment ${index + 1}:`;
 
                 const wordsInSegment = segment.text.split(' ');
+
                 console.log('Words in segment:', wordsInSegment);
 
 
-                for (let j=0; j<wordsInSegment.length; j++) {
+                const wordMap = new Map();
+                words.forEach(word => {
+                 wordMap.set(word.word, word.confidence);
+                 });
 
-                    for (let i = 0; i < words.length; i++) {
 
-                        if(wordsInSegment[j].toLowerCase() === words[i].word) {
+                 wordsInSegment.forEach(word => {
+                    
+                    let confidence = wordMap.get(word.toLowerCase());
 
-                           console.log(" match found --> "+words[i].word);
-                           
+                    if (word.includes('.')){
+                        confidence = wordMap.get(word.replace(/^\.+|\.+$/g, "").toLowerCase());
+                    }
+                
+                    console.log('Word:', word);
+                    console.log('Confidence:', confidence);
+
+
+                        if (confidence !== undefined) {
+
+                            
+
                             const wordSpan = document.createElement('span');
-                            wordSpan.textContent = words[i].word + ' ';
-                            if (words[i].confidence > 0.9) {
+                            wordSpan.textContent = word + ' ';
+
+                            if (confidence > 0.9) {
                                 wordSpan.style.color = 'green';
-                            } else if (words[i].confidence > 0.7 && words[i].confidence < 0.9) {
+                            } else if (confidence > 0.7) {
                                 wordSpan.style.color = 'yellow';
-                            } else if (words[i].confidence > 0.5 && words[i].confidence < 0.7){
-                                wordSpan.style.color = 'orange';
-                            }
-                            else{
+                            } else if (confidence > 0.5) {
+                                    wordSpan.style.color = 'orange';
+                        } else {
                                 wordSpan.style.color = 'red';
                             }
+
                             segmentDiv.appendChild(wordSpan);
-                            break;
-                        }
-                        
-                    }
-                }
+                        }             
+                    });
+
 
                 const sentimentTag = document.createElement('span');
                 sentimentTag.classList.add('sentiment-tag');
